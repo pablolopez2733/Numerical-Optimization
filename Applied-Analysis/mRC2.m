@@ -12,7 +12,8 @@ function [x,msg] = mRC2(f,x0,itmax)
 eta=.1;
 tol=1e-5;
 deltaMax=1.5;
-delta=0+1.5*rand(1,1);
+%delta=0+1.5*rand(1,1);
+delta=1;
 xk=x0;
 k=1;
 bandera=false;
@@ -47,6 +48,7 @@ while (k <= itmax)
     end
     if (rho>eta)
         xk=xk+p;
+        g=apGrad(f,xk);
     else
         xk=xk;
         
