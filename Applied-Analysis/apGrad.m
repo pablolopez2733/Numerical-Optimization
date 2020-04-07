@@ -1,3 +1,4 @@
+
 function [g] = apGrad(f, x)
 % In : f ... (handle) anonymous function
 %      x ... (vector) point where to approx. the gradient
