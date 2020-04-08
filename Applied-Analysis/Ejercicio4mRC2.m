@@ -26,3 +26,4 @@ end
 
 plot(XY(:,1),XY(:,2),'--d')
 hold off
+view(2);

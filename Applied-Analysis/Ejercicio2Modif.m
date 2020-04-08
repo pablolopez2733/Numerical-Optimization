@@ -2,11 +2,11 @@
 %Ejercicio 2
 %Dibujar direcciones en 2d. Sea f : R2 →R y el punto inicial x0 cerca 
 %de un mínimo local x?. La matriz Hessiana en x0 sea simétrica y 
-%(semi-)deﬁnida positiva y se usa para deﬁnir el modelo cuadratico en x0. 
-%Escoge una región de conﬁanza con ∆ > 0. 
+%(semi-)de�?nida positiva y se usa para de�?nir el modelo cuadratico en x0. 
+%Escoge una región de con�?anza con ∆ > 0. 
 %Luego haga un plot (en dos dimensiones) que contiene la frontera de la 
-%región de conﬁanza algunos conjuntos de nivel en R2 del modelo cuadrático 
-%en la región de la conﬁanza. 
+%región de con�?anza algunos conjuntos de nivel en R2 del modelo cuadrático 
+%en la región de la con�?anza. 
 %los tres direcciones Newton, Cauchy, dogleg. Para obtenerlas use sus 
 %funciones pDogLeg, pCauchy.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,6 +55,7 @@ legend([dirN, dirC, dirDog, regionConfianza], {'Direccion Newton', ...
 
 hold off
 grid on
+view(2);
 
 
 
