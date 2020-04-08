@@ -65,7 +65,10 @@ else
   
   end
 x=xk;
-if mgk<tol
+
+%We check for tolerance but we must also make sure that lambda1>0 so that
+%B is positive definite and we can assure that what we found is a minimum. 
+if mgk<tol && lamda1>0
     msg="El mínimo fue hallado";
 else
     msg="El mínimo NO fue hallado";

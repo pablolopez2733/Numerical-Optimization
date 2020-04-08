@@ -13,12 +13,12 @@ else
     pb=(-1)*Binv*g;
     
     if norm(pb)<= delta
-        p=pb;%The point is Newton´s point
+        p=pb;%punto es punto de Newton
     else
-        %We compute Pu:
+        %Calculamos entonces Pu:
         pu= (-.99)*alphau*g;
-        %Now we have to find alpha star between 0 and 1
-        %by solving: ||Pu+alpha(Pb-Pu)||^2
+        %Ahora hay que encontrar alpha asterisco entre 0 y 1
+        %Resolviendo: ||Pu+alpha(Pb-Pu)||^2
         coef_alpha=[(pb-pu).'*(pb-pu),2*(pu.'*pb-pu.'*pu),(pu.' * pu)-delta^2];
         sols=roots(coef_alpha);
         if(sols(1)>0 && sols(1)<=1)

@@ -1,12 +1,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Ejercicio 2
-%Dibujar direcciones en 2d. Sea f : R2 →R y el punto inicial x0 cerca 
-%de un mínimo local x?. La matriz Hessiana en x0 sea simétrica y 
-%(semi-)de�?nida positiva y se usa para de�?nir el modelo cuadratico en x0. 
-%Escoge una región de con�?anza con ∆ > 0. 
-%Luego haga un plot (en dos dimensiones) que contiene la frontera de la 
-%región de con�?anza algunos conjuntos de nivel en R2 del modelo cuadrático 
-%en la región de la con�?anza. 
+%Dibujar direcciones en 2d. Sea f : R2 a R y el punto inicial x0 cerca 
+%de un minimo local x0. La matriz Hessiana en x0 sea simetrica y 
+%(semi-)definida positiva y se usa para definir el modelo cuadratico en x0. 
+%Escoge una region de confianza con delta > 0. 
+%Luego haga un plot (en dos dimensiones) que contiene:
+%la frontera de la region de confianza, 
+%algunos conjuntos de nivel en R2 del modelo cuadratico en la region de la confianza. 
 %los tres direcciones Newton, Cauchy, dogleg. Para obtenerlas use sus 
 %funciones pDogLeg, pCauchy.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,7 +25,7 @@ Bk = apHess(f,x0);
 pN = (-1)*inv(Bk)*gk;
 pC = pCauchy(Bk,gk,delta);
 pDL = pDogLeg(Bk,gk,delta);
-%% 3.Utilizamos el código scrLevel set en el modelo cuadrático
+%% 3.Utilizamos el codigo scrLevel set en el modelo cuadrático
 mk = @(x,y) f(x0)+(gk(1)).*x+(gk(2)).*y+(1/2)*((Bk(1,1)).*(x.^2)+((Bk(1,2))+(Bk(2,1))).*x.*y+(Bk(2,2)).*(y.^2));
 stepsize =  0.01;  
 [X,Y] = meshgrid(-2:stepsize:2);

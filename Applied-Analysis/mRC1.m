@@ -1,8 +1,19 @@
 function [x,msg] = mRC1(f,x0,itmax)
+% Trust region method using the dogleg point.
+% Same arguments and results as the mRC1 method:
+% In : f ... (handle) function to be optimized
+% x0 ... (vector) initial point
+% itmax ... (natural number) upper bound for number of iterations
+%
+% Out: x ... (vector) last approximation of a stationary point
+% msg ... (string) message that says whether (or not) a minimum was found
 
-del0=2.0; %Delta 0
-delm=5.0; %Delta Max
-eta=0.20; %eta
+%For both RC1 and RC2 we based our code on the Algorithm 4.1 of Nocedal´s
+%Numerical Optimization book.
+
+del0=1; %Delta 0
+delm=1.5; %Delta Max
+eta=0.10; %eta
 tol=0.00001;
 format long E;
 
