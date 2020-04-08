@@ -1,4 +1,4 @@
-function [x,msg] = mRC1(f,x0,itmax)
+function [x,msg] = mRC2(f,x0,itmax)
 
 del0=1.0; %Delta 0
 delm=1.5; %Delta Max
