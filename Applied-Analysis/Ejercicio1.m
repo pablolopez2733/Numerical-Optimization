@@ -9,7 +9,7 @@ f = @(X,Y)(1 + ((X + Y + 1).^2) * (19 - (14 * X) + (3 * (X .^2)) - 14*Y + (6 .* 
 
 %% define point and trust region radius
 x0    = [0.5;-0.5];
-delta = 3.5;
+delta = 1;
 %Now we define our Price-Goldstein function:
 f1=@(x) (1 + ((x(1) + x(2) + 1).^2) * (19 - (14 * x(1)) + (3 * (x(1) .^2)) - 14*x(2) + (6 .* x(1).*x(2)) + (3 * (x(2).^2)))) .* ...
         (30 + ((2 * x(1) - 3 * x(2)).^2) .* (18 - 32 * x(1) + 12 * (x(1) .^2) + 48 * x(2) - (36 .* x(1).*x(2)) + (27 * (x(2).^2))));
@@ -20,7 +20,7 @@ showPlot = true;
 hold on
 if showPlot
 	Delta = 1.1*delta;
-	uniGrid = linspace(x0(1)-1.2*Delta, x0(1)+1.2*(Delta), 32);
+	uniGrid = linspace(x0(1)-2*Delta, x0(1)+1.2*(Delta), 32);
 	[X,Y]   = meshgrid(uniGrid, uniGrid);
 	Z  = f(X,Y);
 	s2 = surf(X,Y,Z);
@@ -42,10 +42,12 @@ m  = @(X,Y) (1.937500000000000e+02) +(-0667.499999692550).*X +(1.582499999511301
 Z  = m(X,Y);
 s1 = mesh(X,Y,Z);
 %zlim([-inf 10000]);
-%view(1.162625000000000e+02,44.130275229357792);
-view(1.044500000000000e+02,47.366972477064209)
+%Por abajo:
+view(-63.874861878453011,-20.278037383177562);
+%Por arriba:
+%view(1.044500000000000e+02,47.366972477064209);
 
-view(v);
+%view(v);
 hold off
 
 

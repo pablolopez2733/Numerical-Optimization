@@ -1,6 +1,6 @@
-function [x,msg] = mRC2(f,x0,itmax)
+function [x,msg,it] = mRC2(f,x0,itmax)
 
-del0=1.0; %Delta 0
+del0=0.5; %Delta 0
 delm=1.5; %Delta Max
 eta=0.10; %eta
 tol=0.00001;
@@ -11,6 +11,7 @@ mg0=norm(g0);
 
 if (mg0<=tol)
   x=x0;
+  it=0;
   msg="El mínimo fue hallado";
 
 else
@@ -19,7 +20,7 @@ else
   xk=x0;
   k=1;
 
-  while (k<itmax && mgk>tol)
+  while (k<=itmax && mgk>tol)
 
     gk=apGrad(f,xk);
     mgk=norm(gk);
@@ -65,9 +66,9 @@ else
   
   end
 x=xk;
-
-%We check for tolerance but we must also make sure that lambda1>0 so that
-%B is positive definite and we can assure that what we found is a minimum. 
+it=k-1;
+%We check for tolerance but we must also check if B is pd to ensure we
+%found a minimum and not a maximum
 if mgk<tol && lamda1>0
     msg="El mínimo fue hallado";
 else
