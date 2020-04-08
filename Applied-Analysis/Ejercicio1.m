@@ -30,6 +30,7 @@ end
 
 %% plot quadratic model in trust region with polar coordinates arround x0
 hold on
+grid on
 % polar coordinates arround x0
 [T,R] = meshgrid(linspace(0,2*pi,64),linspace(0,delta,16));
 X = R.*cos(T)+x0(1);
@@ -41,5 +42,11 @@ m  = @(X,Y) (1.937500000000000e+02) +(-0667.499999692550).*X +(1.582499999511301
 Z  = m(X,Y);
 s1 = mesh(X,Y,Z);
 %zlim([-inf 10000]);
-view(130, 15);
+%view(1.162625000000000e+02,44.130275229357792);
+view(1.044500000000000e+02,47.366972477064209)
+
+view(v);
 hold off
+
+
+

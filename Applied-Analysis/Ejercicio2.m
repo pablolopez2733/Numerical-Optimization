@@ -54,6 +54,7 @@ legend([dirN, dirC, dirDog, regionConfianza], {'Direccion Newton', ...
 
 hold off
 grid on
+view(2);
 
 
 
