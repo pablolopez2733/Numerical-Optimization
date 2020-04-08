@@ -1,69 +1,76 @@
-function [x,msg] = mRC2(f,x0,itmax)
-% Trust region method using the dogleg point.
-% Same arguments and results as the mRC1 method:
-% In : f ... (handle) function to be optimized
-% x0 ... (vector) initial point
-% itmax ... (natural number) upper bound for number of iterations
-%
-% Out: x ... (vector) last approximation of a stationary point
-% msg ... (string) message that says whether (or not) a minimum was found
+function [x,msg] = mRC1(f,x0,itmax)
 
-%Define central parameters:
-eta=.1;
-tol=1e-5;
-deltaMax=1.5;
-%delta=0+1.5*rand(1,1);
-delta=1;
-xk=x0;
-k=1;
-bandera=false;
-while (k <= itmax)
-    %Define values for each iteration:
-    fk=f(xk);
-    g=apGrad(f,xk);
-    B=apHess(f,xk);
-    %Check if B is spd
-    lamda1=eigs(B,1,'sm');
+del0=1.0; %Delta 0
+delm=1.5; %Delta Max
+eta=0.10; %eta
+tol=0.00001;
+format long E;
+
+g0=apGrad(f, x0);
+mg0=norm(g0);
+
+if (mg0<=tol)
+  x=x0;
+  msg="El mínimo fue hallado";
+
+else
+  mgk=mg0;
+  delk=del0;
+  xk=x0;
+  k=1;
+
+  while (k<itmax && mgk>tol)
+
+    gk=apGrad(f,xk);
+    mgk=norm(gk);
+    Bk=apHess(f,xk);
+    %Check if Bk is spd
+    lamda1=eigs(Bk,1,'sm');
     %If it´s not, we redefine B as follows:
     if(lamda1<=0)
         s=(1e-12)-((9/8)*(lamda1));
-        B=B+s*(eye(length(xk)));
+        Bk=Bk+s*(eye(length(xk)));
         
     end
-    %Following the Algorithm 4.1 on Nocedal,we first Obtain pk by
-    %approximately solving: mk(p) s.t. ||p||<=delta.
-    %This is where we use our dogleg algorithm to approximate p
-    mk= @(p) fk+g.'*p+(1/2)*p.'*B*p;
-    p=pDogLeg(B,g,delta);
-    %Evaluate rho from 4.4
-    rho=(f(xk)-f(xk+p))/(mk(zeros(size(xk)))-mk(p));
-    if (rho<1/4)
-        delta=(1/4)*delta;
-    else
-        if rho>3/4 && norm(p)== delta
-            delta= min(2*delta,1.5);
-        else
-            delta=delta;
-        end
-    end
-    if (rho>eta)
-        xk=xk+p;
-        g=apGrad(f,xk);
-    else
-        xk=xk;
+    
+    
+    pck=pDogLeg(Bk,gk,delk);
+    
+    rhok=-(f(xk)-f(xk+pck))/(dot(gk,pck)+0.5*(dot(pck,Bk*pck)));
         
+    mindel=min(2*delk,delm);
+        
+    if (rhok<0.25) 
+      delk1=0.25*delk;
+    else
+      if ((rhok>0.75)&&(norm(pck)==delk))
+        delk1=mindel;
+      else
+        delk1=delk;
+      end
     end
-    if norm(g)<tol
-        x=xk;
-        %disp(x);
-        msg="Sí se encontró un mínimo.";
-        bandera=true;
-        break;
+    
+    if (rhok>eta)
+       xk1=xk+pck;
+    else
+       xk1=xk;     
     end
+    
+    gk1=apGrad(f,xk1);
+    mgk1=norm(gk1);
+    mgk=mgk1;
+    delk=delk1;
+    xk=xk1; 
     k=k+1;
+  
+  end
+x=xk;
+if mgk<tol
+    msg="El mínimo fue hallado";
+else
+    msg="El mínimo NO fue hallado";
 end
-if(k==itmax && bandera==false)
-    msg="No se encontró ningún máximo";
-    x=xk;
-end
+
+end   
+
 end
