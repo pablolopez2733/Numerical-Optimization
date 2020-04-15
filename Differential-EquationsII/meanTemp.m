@@ -1,11 +1,14 @@
-function [T] = meanTemp()
+function [T,E] = meanTemp()
+%Esta función nos regresa los valores de T y E que son soluciones de la
+%ecuación.
+
 %Definimos T como un vector de 3 entradas ya que sabemos que la ecuación
 %tendrá 3 soluciones (2 inestables y 1 estable)
 
 %% Define parameters:
 eps=0.62;
 Q=342;
-theta=(5.67e-08);
+sigma=(5.67e-08);
 
 %% Plot:
 %Sabemos que las soluciones están alrededor de:
@@ -17,7 +20,7 @@ theta=(5.67e-08);
 %contrario, solo nos regresa la primera que encuentre.
 syms t
 eqnLeft = (1-((.5-(0.2)*(tanh((t-265)/10)))))*Q;
-eqnRight = (eps)*(theta)*(t^4);
+eqnRight = (eps)*(sigma)*(t^4);
 fplot([eqnLeft eqnRight])
 xlim([200 310])
 ylim([50 350])
@@ -32,4 +35,11 @@ t2=vpasolve(eqnLeft == eqnRight, t, 265);
 t3=vpasolve(eqnLeft == eqnRight, t, 285);
 T=[t1,t2,t3];
 %Así tenemos T nuestro vector con tres soluciones
+
+%% Get Energy values:
+E=zeros(3,1);
+for i=1:3
+    E(i)=(T(i)^4)*eps*sigma;
+end
+
 end
