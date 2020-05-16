@@ -26,7 +26,7 @@ syms t
 eqnLeft = (1-((.5-(0.2)*(tanh((t-265)/10)))))*Q;
 eqnRight = A+B*t;
 fplot([eqnLeft eqnRight])
-xlim([-100 310])
+xlim([- 310])
 ylim([-100 350])
 title([texlabel(eqnLeft) ' = ' texlabel(eqnRight)])
 xlabel('Temperatura (°C)')
