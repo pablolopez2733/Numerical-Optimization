@@ -21,7 +21,7 @@ while 1
         break
     elseif PhiD(alphaB)*(alphaHi - alphaLo) >= 0
         alphaHi = alphaLo;
-        alphaLo = alphaB;
+        %alphaLo = alphaB;
     else
         alphaLo = alphaB;
     end

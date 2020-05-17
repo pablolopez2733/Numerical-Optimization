@@ -1,39 +1,53 @@
-function [alphastar, gnew] = lineSearch( f, xk, dk, gk ) 
-% In : f ... objectve function (handle) 
+function [alpha, gnew] = lineSearch( f, xk, dk, gk ) 
+% In : f  ... (handle) objectve function 
 %      xk ... current point 
 %      dk ... chosen direction of descent 
-%      gk ... gradient of f in xk % 
+%      gk ... gradient of f in xk
+%
 % Out: alpha ... a parameter satisfying (W1) and (W2) 
-%      gnew ... gradient of f in xk+alpha*dk
+%      gnew  ... gradient of f in xk+alpha*dk
 
-%Define Parameters
-alphaold = 0;
-alphanew = 1;
-alphamax = 2^10;
+%Definimos parametros y funciones útiles
+alpha0 = 0;
+alpha1 = 1;
+alphamax = 1e3;
 c1 = 1e-4;
 c2 = 0.99;
+phid0 = dot(gk,dk);
+n=length(xk);
 
-%Define Useful Functions
-slope = dot(gk,dk);
 phi = @(x) f(xk + x*dk);
-L = @(y) f(xk) + c1*y*slope;
-phiP = @ (z) dot(apGrad(f,xk+z*dk), dk);
+L = @(y) f(xk) + c1*y*phid0;
+phid = @(z) dot(apGrad(f,xk+z*dk), dk);
 
-%LineSearch
-while alphanew > 0 && alphanew<alphamax
-    if phi(alphanew)>leg(alphanew) || phi(alphanew) >= phi(alphaold)
-        alpha2 = zoom(alphaold,alphanew,f,xk,gk,dk);
+%Algoritmo LineSearch
+while alpha1>0 && alpha1<alphamax
+    
+    if phi(alpha1) > L(alpha1) || phi(alpha1) >= phi(alpha0)
+        alpha = zoom(alpha0,alpha1,f,xk,gk,dk);
+        gnew = apGrad(f,xk+alpha*dk);
         break
-    elseif abs(phiP(alphanew))<=-c2*slope
-        alpha2 = alphanew;
-    break
-    elseif phiP(alphanew)>=0
-        alpha2 = zoom(alphanew, alphaold,f,xk,gk,dk);
-    break
-    else
-        alphaold = alphanew;
-        alphanew = min(2*alphanew, alphamax - 10*eps);
     end
+    
+    if abs(phid(alpha1)) <= -c2*phid0
+        alpha = alpha1;
+        gnew = apGrad(f,xk+alpha*dk);
+        break
+    end
+    
+    if phid(alpha1) >= 0
+        alpha = zoom(alpha1, alpha0,f,xk,gk,dk);
+        gnew = apGrad(f,xk+alpha*dk);
+        break
+    end
+    
+    alpha0 = alpha1;
+    alpha1 = 2*alpha1;   
 end
-alphastar = alpha2;
-gnew = apGrad(f,xk+alphastar*dk);
+
+if alpha1 >= alphamax
+    alpha=0;
+    gnew=zeros(n,1);
+end
+
+end
