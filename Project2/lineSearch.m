@@ -46,8 +46,8 @@ while alpha1>0 && alpha1<alphamax
 end
 
 if alpha1 >= alphamax
-    alpha=0;
-    gnew=zeros(n,1);
+    alpha=alpha1;
+    gnew=apGrad(f,xk+alpha*dk);
 end
 
 end
