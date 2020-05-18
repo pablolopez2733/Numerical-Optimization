@@ -20,19 +20,19 @@ x=x0;
 %% Dixmanna function:
 %termino1
 for i=1:n
-    term1= term1+(alpha)*(x(i)^2)*(i/n)^k1;
+    term1=(alpha)*(x(i)^2)*(i/n)^k1;
 end
 %termino2
 for i=1:(n-1)
-    term2=term2+(beta)*(x(i)^2)*(x(i+1)+x(i+1)^2)^2*(i/n)^k2;
+    term2=(beta)*(x(i)^2)*(x(i+1)+x(i+1)^2)^2*(i/n)^k2;
 end
 %termino3
 for i=1:2*m
-    term3=term3+(gamma)*(x(i)^2)*(x(i+m)^4)*(i/n)^k3;
+    term3=(gamma)*(x(i)^2)*(x(i+m)^4)*(i/n)^k3;
 end
 %termino4
 for i=1:m
-    term4=term4+(sigma)*(x(i))*(x(i+2*m))*(i/n)^k4;
+    term4=(sigma)*(x(i))*(x(i+2*m))*(i/n)^k4;
 end
 
 f=1+term1+term2+term3+term4;
