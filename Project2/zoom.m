@@ -30,4 +30,3 @@ end
 alphaOp = alphaAux;
 
 end
-        

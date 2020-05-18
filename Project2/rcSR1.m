@@ -60,11 +60,7 @@ while norm(gk) > tol && iter < itmax
     end
 end
 
-if norm(gk)<= tol
-    x=xk;
-else
-    x=zeros(n,1);
-end
+x=xk;
 
 end
 

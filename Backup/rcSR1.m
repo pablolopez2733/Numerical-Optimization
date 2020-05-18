@@ -18,14 +18,14 @@ xk=x0;
 Hk = speye(n);
 Bk = Hk;
 iter = 0;
-gk=apGrad(f,x0);
+gk=apGrad(f,xk);
 
 %Metodo SR1 Trust-Region 
 while norm(gk) > tol && iter < itmax
     sk = -Hk*gk;
     if dot(sk,gk) < 0
         if norm(sk) > deltak
-            sk = deltak*sk/norm(sk);
+            sk = deltak*(sk/norm(sk));
         end
     else 
         sk = pCauchy(Bk,gk,deltak);
@@ -46,13 +46,13 @@ while norm(gk) > tol && iter < itmax
         if norm(sk)>0.8*deltak
             deltak = 2*deltak;
         end
-    end    
+    end
+    
     if div < 0.1
         deltak = 0.5*deltak;
     end
     
     vk = yk - Bk*sk;
-    
     if abs(dot(vk,sk))>=r*norm(sk)*norm(vk)
         Bk = Bk + (vk*vk')/dot(vk,sk);
         wk=sk-Hk*yk;
@@ -62,7 +62,10 @@ end
 
 if norm(gk)<= tol
     x=xk;
+else
+    x=zeros(n,1);
 end
+
 end
 
 

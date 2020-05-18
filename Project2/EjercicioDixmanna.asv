@@ -89,17 +89,11 @@ fprintf('\nTiempos de ejecucion')
 fprintf('%d ', results_time2);
 fprintf('\n');
 
-%% Tabla n=240
+%% Tabla
 fprintf("------------Resultados con n=240 ------------\n")
 fprintf("\n m \t Iteraciones \t ||∇f(xk)|| \t  f(xk) \t Tiempo \n")
 for j = 1:5
-fprintf("\n %d \t %d \t %d \t  %d \t %d \n", vectorm(j) , results_iter(j), results_norm(j), results_last(j), results_time(j))
-end
-%% Tabla n=960
-fprintf("------------Resultados con n=960 ------------\n")
-fprintf("\n m \t Iteraciones \t ||∇f(xk)|| \t  f(xk) \t Tiempo \n")
-for j = 1:5
-fprintf("\n %d \t %d \t %d \t  %d \t %d \n", vectorm(j) , results_iter2(j), results_norm2(j), results_last2(j), results_time2(j))
+fprintf("\n %d \t %d \t %d \t  %d \t %d \n", vectorm(j) , aux(j), ng_SCR1(j), f_SCR1(j), e_SCR1(j))
 end
 
 
