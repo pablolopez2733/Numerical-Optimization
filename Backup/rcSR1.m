@@ -20,7 +20,7 @@ Bk = Hk;
 iter = 0;
 gk=apGrad(f,xk);
 
-%Metodo SR1 Trust-Region 
+%Inicio algoritmo
 while norm(gk) > tol && iter < itmax
     sk = -Hk*gk;
     if dot(sk,gk) < 0
@@ -60,11 +60,7 @@ while norm(gk) > tol && iter < itmax
     end
 end
 
-if norm(gk)<= tol
-    x=xk;
-else
-    x=zeros(n,1);
-end
+x=xk;
 
 end
 

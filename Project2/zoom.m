@@ -1,32 +1,31 @@
-function [alphaOp] = zoom(alphaLo, alphaHi, f, xk, gk, dk)
+function [alpha] = zoom(alphalo, alphahi, f, xk, gk, dk)
 
-%Define los parametros
+%Define los parametros y funciones utiles
 c1 = 1e-4;
 c2 = 0.99;
+phid0 = dot(gk,dk);
+ 
+phi = @(x) f(xk + x*dk);
+L = @(y) f(xk) + c1*y*phid0;
+phid = @(z) dot(apGrad(f,xk + z*dk),dk);
 
-PhiD0 = dot(gk,dk);
 
-%Definimos nuestras funciones 
-Phi = @(x) f(xk + x*dk);
-PhiD = @(y) dot(apGrad(f,xk + y*dk),dk);
-Line = @(z) f(xk) + c1*z*PhiD0;
-
-%Algoritmo para zoom
+%Inicio algoritmo
 while 1
-    alphaB = (alphaLo + alphaHi)/2;
-    if Phi(alphaB) > Line(alphaB) || Phi(alphaB) >= Phi(alphaLo)
-        alphaHi = alphaB;
-    elseif abs(PhiD(alphaB)) <= -c2*PhiD0
-        alphaAux = alphaB;
+    alphaj = (alphalo + alphahi)/2;
+    if phi(alphaj) > L(alphaj) || phi(alphaj) >= phi(alphalo)
+        alphahi = alphaj;
+    elseif abs(phid(alphaj)) <= -c2*phid0
+        alphanew = alphaj;
         break
-    elseif PhiD(alphaB)*(alphaHi - alphaLo) >= 0
-        alphaHi = alphaLo;
-        alphaLo = alphaB;
+    elseif phid(alphaj)*(alphahi - alphalo) >= 0
+        alphahi = alphalo;
+        alphalo = alphaj;
     else
-        alphaLo = alphaB;
+        alphalo = alphaj;
     end
 end
 
-alphaOp = alphaAux;
+alpha = alphanew;
 
 end

@@ -1,47 +1,53 @@
-function [alpha, gnew] = lineSearch( f, xk, dk, gk )
-
-% In : f  ... objective function (handle)
-%      xk ... current point
-%      dk ... chosen direction of descent
+function [alpha, gnew] = lineSearch( f, xk, dk, gk ) 
+% In : f  ... (handle) objectve function 
+%      xk ... current point 
+%      dk ... chosen direction of descent 
 %      gk ... gradient of f in xk
 %
-% Out: alpha ... a parameter satisfying (W1) and (W2)
-%      gnew  ... gradient of f in xk + alpha*dk
-%
-% parameters: c1 = 1e-4, c2 = 0.99, alpha0 = 0, alpha1 = 1, 
-%             zoom takes alpha_i = (alpha_lo + alpha_hi)/2
-%
-    alpha0=0;
-    alpha1=1;
-    c1 = 1e-4;
-    c2 = 0.99;
-    fk = f(xk);
-    slope0 = dot(gk,dk);
-    cond =  true;
-    while cond
-      alpha_i = 0.5*(alpha0 + alpha1);
-      f1 = f(xk + alpha_i*dk); 
-      if (f1 > fk + alpha_i*c1*slope0) || (f1 >= f(xk + alpha0*dk))
-        alpha1 = alpha_i;
-        continue;
-      else
-        gnew = apGrad(f,xk + alpha_i*dk);
-        slope = dot(gnew,dk); 
-        if abs(slope) <= -c2*slope0
-          alpha=alpha_i;
-          cond=false;
-          break;
-        else
-          if (alpha1-alpha0)*slope >= 0
-            alpha1=alpha_i;
-          else
-            alpha0 = alpha_i;
-          end
-        end
-      end
-          
-      
-      
+% Out: alpha ... a parameter satisfying (W1) and (W2) 
+%      gnew  ... gradient of f in xk+alpha*dk
+
+%Definimos parametros y funciones útiles
+alpha0 = 0;
+alpha1 = 1;
+alphamax = 1e3;
+c1 = 1e-4;
+c2 = 0.99;
+phid0 = dot(gk,dk);
+n=length(xk);
+
+phi = @(x) f(xk + x*dk);
+L = @(y) f(xk) + c1*y*phid0;
+phid = @(z) dot(apGrad(f,xk+z*dk), dk);
+
+%Inicia algoritmo
+while alpha1>0 && alpha1<alphamax
+    
+    if phi(alpha1) > L(alpha1) || phi(alpha1) >= phi(alpha0)
+        alpha = zoom(alpha0,alpha1,f,xk,gk,dk);
+        gnew = apGrad(f,xk+alpha*dk);
+        break
     end
+    
+    if abs(phid(alpha1)) <= -c2*phid0
+        alpha = alpha1;
+        gnew = apGrad(f,xk+alpha*dk);
+        break
+    end
+    
+    if phid(alpha1) >= 0
+        alpha = zoom(alpha1, alpha0,f,xk,gk,dk);
+        gnew = apGrad(f,xk+alpha*dk);
+        break
+    end
+    
+    alpha0 = alpha1;
+    alpha1 = 2*alpha1;   
+end
+
+if alpha1 >= alphamax
+    alpha=0;
+    gnew=zeros(n,1);
+end
 
 end

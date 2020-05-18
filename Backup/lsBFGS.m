@@ -18,7 +18,7 @@ gnew = 1;
     while norm(gnew) > tol
         dk = -H*gk;
     
-        [alpha, gnew] = encAlpha( f, xk, dk, gk );
+        [alpha, gnew] = lineSearch( f, xk, dk, gk );
     
         s = alpha*dk;
         xk = xk + s;

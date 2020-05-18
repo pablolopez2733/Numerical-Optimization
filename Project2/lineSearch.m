@@ -20,7 +20,7 @@ phi = @(x) f(xk + x*dk);
 L = @(y) f(xk) + c1*y*phid0;
 phid = @(z) dot(apGrad(f,xk+z*dk), dk);
 
-%Algoritmo LineSearch
+%Inicia algoritmo
 while alpha1>0 && alpha1<alphamax
     
     if phi(alpha1) > L(alpha1) || phi(alpha1) >= phi(alpha0)
@@ -46,8 +46,8 @@ while alpha1>0 && alpha1<alphamax
 end
 
 if alpha1 >= alphamax
-    alpha=alpha1;
-    gnew=apGrad(f,xk+alpha*dk);
+    alpha=0;
+    gnew=zeros(n,1);
 end
 
 end
