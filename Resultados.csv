@@ -1,0 +1,8 @@
+﻿Ranking,# de experimento,Capas,Funciones de activación,Filtros,Epochs,Batch Size,Accuracy,Comentarios
+1,13,2,3 ReLu - 1 Sigmoide,512,40,512,0.85,El mejor accuracy que obtuvimos y también las mejores imágenes recuperadas. Además con menos tiempo de ejecución que aquellos modelos con 50 epochs.
+2,10,2,3 ReLu - 1 Sigmoide,512,40,256,0.85,El más alto acuracy de todos y naturalmente tardó menos pues disminuimos los epochs. Este es el experimento que mejor recuperó las imágenes. 
+3,12,2,3 ReLu - 1 Sigmoide,256,30,256,0.8193,Rankeamos tan alto este resultado porque está disminuyendo los epochs casi a la mitad y sigue dando mejores resultados que aquellos con 50 epochs. 
+4,9,2,3 ReLu - 1 Sigmoide,512,50,256,0.8,"Aunque presenta menor accuracy que el experimento con 256 filtros, la calidad de las imágenes parece ser mejor. "
+5,7,2,3 ReLu - 1 Sigmoide,256,50,256,0.84,Seguía mejorando el desempeño obtenido por la red con 32 filtros.
+6,5,2,3 ReLu - 1 Sigmoide,32,50,256,0.7883,Notable mejora a las redes con 8 filtros. Primera que producía imágenes distinguibles.
+7,8,3,5 ReLu- 1 Sigmoide,256,50,256,0.7995,La rankeamos por debajo de las de dos capas debido a que costó mucho más hacerla en cuanto a tiempo de ejecución y no notamos una mejora sustancial.
